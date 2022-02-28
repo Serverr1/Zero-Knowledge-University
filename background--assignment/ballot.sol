@@ -58,9 +58,15 @@ contract Ballot {
     function giveRightToVote(address[] memory voter) public {
         for (uint i = 0; i < voter.length; i++){ 
             
-
-        require(msg.sender == chairperson && !voters[voter[i]].voted && 
-        voters[voter[i]].weight == 0, "Requirements not met.");
+         require(
+            msg.sender == chairperson,
+            "Only chairperson can give right to vote."
+        );
+        require(
+            !voters[voter[i]].voted,
+            "The voter already voted."
+        );
+        require(voters[voter[i]].weight == 0);
 
         voters[voter[i]].weight = 1; 
     }
